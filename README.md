@@ -1,19 +1,19 @@
-# KPEval
+# KPEval 🛠️
 
-KPEval is a toolkit for evaluating your keyphrase systems. 
+KPEval is a toolkit for evaluating your keyphrase systems. 🎯
 
 We provide semantic-based metrics for four evaluation dimensions:
 
-- **Reference Agreement:** evaluating the extent keyphrase predictions align with human-annotated references.
-- **Faithfulness:** evaluating whether each keyphrase prediction is semantically grounded in the input.
-- **Diversity:** evaluating whether the predictions include diverse keyphrases with minimal repetitions.
-- **Utility:**  evalauting the potential of the predictions to enhance document indexing for improved information retrieval performance.
+- 🤝 **Reference Agreement:** evaluating the extent keyphrase predictions align with human-annotated references.
+- 📚 **Faithfulness:** evaluating whether each keyphrase prediction is semantically grounded in the input.
+- 🌈 **Diversity:** evaluating whether the predictions include diverse keyphrases with minimal repetitions.
+- 🔍 **Utility:**  evalauting the potential of the predictions to enhance document indexing for improved information retrieval performance.
 
 If you have any questions or suggestions, please submit an issue. Thank you!
 
-## News
-- [**2024/02**] We have released the KPEval toolkit.
-- [**2023/05**] The phrase embedding model is now available at [uclanlp/keyphrase-mpnet-v1](https://huggingface.co/uclanlp/keyphrase-mpnet-v1).
+## News 📰
+- [**2024/02**] 🚀 We have released the KPEval toolkit.
+- [**2023/05**] 🌟 The phrase embedding model is now available at [uclanlp/keyphrase-mpnet-v1](https://huggingface.co/uclanlp/keyphrase-mpnet-v1).
 
 ## Getting Started
 
@@ -48,7 +48,7 @@ bash run_evaluation.sh kp20k 8_catseq semantic_matching
 
 Two log files containing the evaluation results and the per-document scores will be saved to `eval_results/[dataset]/[model_id]/`. Please see below for the `metric_id` corresponding to various metrics.
 
-## Supported Metrics
+## Supported Metrics 📊
 
 The major metrics supported here are the ones introduced in [KPEval](https://arxiv.org/abs/2303.15422). 
 
@@ -84,7 +84,7 @@ Note: to evaluate utility, you need to prepare the training data using [DeepKPG]
 | diversity          | Unique token ratio  | diversity             | unique_token_ratio                |
 | diversity          | SelfBLEU            | diversity             | self_bleu                         |
 
-## Using your own models, datasets, or metrics
+## Using your own models, datasets, or metrics 🛠️
 - **New dataset**: create a config file at `configs/sample_config_[dataset].gin`.
 - **New model**: store your model's outputs at `model_outputs/[dataset]/[model_id]/[dataset]_hypotheses_linked.json`. The file should be in `jsonl` format containing three fields: `source`, `target`, `prediction`. If you are conducting reference-free evaluation, you may use a placeholder in the target field.
 - **New metric**: just create a new file in the `metrics` folder. The metric class should inherit `KeyphraseMetric`. Make sure you update `metrics/__init__.py` and `run_evaluation.py`. Also make sure you update the config file in `configs` with the parameters with your new metrics.
