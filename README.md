@@ -2,7 +2,7 @@
 
 KPEval is a toolkit for evaluating your keyphrase systems. 🎯
 
-We provide semantic-based metrics for four evaluation dimensions:
+We provide semantic-based metrics for four evaluation aspects:
 
 - 🤝 **Reference Agreement:** evaluating the extent keyphrase predictions align with human-annotated references.
 - 📚 **Faithfulness:** evaluating whether each keyphrase prediction is semantically grounded in the input.
@@ -50,7 +50,7 @@ Two log files containing the evaluation results and the per-document scores will
 
 ## Supported Metrics 📊
 
-The major metrics supported here are the ones introduced in [KPEval](https://arxiv.org/abs/2303.15422). 
+The major metrics supported here are the ones introduced in [the KPEval paper](https://arxiv.org/abs/2303.15422). 
 
 | aspect             | metric           | `metric_id`          | `result_field`                  |
 |--------------------|------------------|--------------------|-------------------------------|
@@ -65,7 +65,7 @@ The major metrics supported here are the ones introduced in [KPEval](https://arx
 
 Note: to evaluate utility, you need to prepare the training data using [DeepKPG](https://github.com/uclanlp/DeepKPG) and update the config to point to the corpus.
 
- In addition, we also support the following metrics:
+ In addition, we support the following metrics from various previous work:
 
 | aspect             | metric              | metric_id             | result_field                      |
 |--------------------|---------------------|-----------------------|-----------------------------------|
@@ -87,7 +87,7 @@ Note: to evaluate utility, you need to prepare the training data using [DeepKPG]
 ## Using your own models, datasets, or metrics 🛠️
 - **New dataset**: create a config file at `configs/sample_config_[dataset].gin`.
 - **New model**: store your model's outputs at `model_outputs/[dataset]/[model_id]/[dataset]_hypotheses_linked.json`. The file should be in `jsonl` format containing three fields: `source`, `target`, `prediction`. If you are conducting reference-free evaluation, you may use a placeholder in the target field.
-- **New metric**: just create a new file in the `metrics` folder. The metric class should inherit `KeyphraseMetric`. Make sure you update `metrics/__init__.py` and `run_evaluation.py`. Also make sure you update the config file in `configs` with the parameters with your new metrics.
+- **New metric**: just implement it in a new file in the `metrics` folder. The metric class should inherit `KeyphraseMetric`. Make sure you update `metrics/__init__.py` and `run_evaluation.py`. Also make sure you update the config file in `configs` with the parameters for your new metrics.
 
 ## Citation
 If you find this toolkit useful, please consider citing the following paper.
