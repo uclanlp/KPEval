@@ -1,6 +1,8 @@
 # KPEval 🛠️
 
-KPEval is a toolkit for evaluating your keyphrase systems. 🎯
+KPEval is a toolkit for evaluating your keyphrase systems. 🎯 
+
+[[Paper]](https://arxiv.org/abs/2303.15422) [[Tweet]](https://x.com/DiWu0162/status/1762610119840505951)
 
 We provide semantic-based metrics for four evaluation aspects:
 
