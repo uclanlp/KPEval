@@ -2,7 +2,7 @@
 
 KPEval is a toolkit for evaluating your keyphrase systems. 🎯 
 
-[[Paper]](https://arxiv.org/abs/2303.15422) [[Tweet]](https://x.com/DiWu0162/status/1762610119840505951)
+[[Paper] (ACL 2024 Findings)](https://aclanthology.org/2024.findings-acl.117.pdf) [[Tweet]](https://x.com/DiWu0162/status/1762610119840505951)
 
 We provide semantic-based metrics for four evaluation aspects:
 
@@ -94,12 +94,20 @@ Note: to evaluate utility, you need to prepare the training data using [DeepKPG]
 ## Citation
 If you find this toolkit useful, please consider citing the following paper.
 ```
-@article{wu2023kpeval,
-      title={KPEval: Towards Fine-grained Semantic-based Evaluation of Keyphrase Extraction and Generation Systems}, 
-      author={Di Wu and Da Yin and Kai-Wei Chang},
-      year={2023},
-      eprint={2303.15422},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{wu-etal-2024-kpeval,
+    title = "{KPE}val: Towards Fine-Grained Semantic-Based Keyphrase Evaluation",
+    author = "Wu, Di  and
+      Yin, Da  and
+      Chang, Kai-Wei",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Findings of the Association for Computational Linguistics ACL 2024",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand and virtual meeting",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.findings-acl.117",
+    pages = "1959--1981",
 }
 ```
