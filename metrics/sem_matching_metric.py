@@ -32,12 +32,13 @@ def cls_pooling(model_output, attention_mask):
 
 @gin.configurable
 class SemanticMatchingMetric(KeyphraseMetric):
-    def __init__(self, model_name_or_path, similarity_threshold, pooling_across_phrases):
+    def __init__(self, model_name_or_path, similarity_threshold, pooling_across_phrases, top_k=3):
         """
         Semantic matching metric (based on sentence transformers)
         """
         super(SemanticMatchingMetric, self).__init__()
-        
+
+        self.top_k = top_k
         self.model = SentenceTransformer(model_name_or_path)
         self.similarity_threshold = similarity_threshold
         self.pooling_across_phrases = pooling_across_phrases
@@ -103,7 +104,35 @@ class SemanticMatchingMetric(KeyphraseMetric):
         # cur_method_sem_f1.append('{:.4f}'.format(cur_f1))
         
         return {'p': cur_p, 'r': cur_r, 'f1': cur_f1}
+        
+        ##########################################################
+        # Semantic R-precision (SemR-p)
+        ###########################################################
+        
+    def calculate_semantic_r_precision(self, stemmed_preds, stemmed_refs):
+    n_refs = len(stemmed_refs)
+    if n_refs == 0:
+        return 0.0
 
+    # Step 1: Check exact stem matching
+    stem_matches = [1.0 if p in stemmed_refs else 0.0 for p in stemmed_preds[:n_refs]]
+
+    # Step 2: Semantic similarity for non-matches
+    pred_embeddings = self.model.encode(stemmed_preds[:n_refs])
+    ref_embeddings = self.model.encode(stemmed_refs)
+    sim_matrix = util.cos_sim(pred_embeddings, ref_embeddings)
+
+    # Step 3: Average top-k similarities per prediction
+    semantic_scores = []
+    for i in range(len(pred_embeddings)):
+        if stem_matches[i] == 1.0:
+            semantic_scores.append(1.0)
+        else:
+            topk_sims = torch.topk(sim_matrix[i], min(self.top_k, n_refs)).values
+            semantic_scores.append(topk_sims.mean().item())
+
+    return sum(semantic_scores) / n_refs  # Normalize
+        
     def score_corpus(self, all_preds, all_refs, all_inputs):
         source, target, preds = all_inputs, all_refs, all_preds
         
@@ -171,5 +200,22 @@ class SemanticMatchingMetric(KeyphraseMetric):
                                                         present_labels_stemmed + absent_labels_stemmed)
             for m in ['p', 'r', 'f1']:
                 score_dict[f'semantic_{m}'].append(allkp_scores[m])
+                
+            # Prepare stemmed predictions and references for SemR-p
+            stemmed_predictions = present_preds_stemmed + absent_preds_stemmed
+            stemmed_references = present_labels_stemmed + absent_labels_stemmed
+
+            # Calculate Semantic R-Precision
+            n_refs = len(stemmed_references)
+            top_r_preds = stemmed_predictions[:n_refs]  # Truncate predictions to top R
+
+            # Pass stemmed keyphrases to calculate_semantic_r_precision
+            sem_r_precision = self.calculate_semantic_r_precision(top_r_preds, stemmed_references)
+
+
+            score_dict['semantic_r_precision'].append(sem_r_precision)
+
+
+        
             
         return score_dict

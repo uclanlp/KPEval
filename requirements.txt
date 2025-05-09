@@ -1,3 +1,19 @@
+## --- PyTorch Installation ---
+
+# Option 1: For CUDA 11.7 (Uncomment these lines if using CUDA)
+# torch==1.13.1+cu117
+# torchvision==0.14.1+cu117
+# torchaudio==0.13.1
+
+# Option 2: For CPU / macOS (Uncomment these lines if NOT using CUDA)
+# torch==1.13.1
+# torchvision==0.14.1
+# torchaudio==0.13.1
+
+# --- End PyTorch ---
+
+
+# Other dependencies
 aiohttp==3.8.4
 aiosignal==1.3.1
 async-timeout==4.0.2
@@ -57,9 +73,6 @@ sentencepiece==0.1.99
 six==1.16.0
 threadpoolctl==3.1.0
 tokenizers==0.13.3
-torch==1.13.1+cu117
-torchaudio==0.13.1+cu117
-torchvision==0.14.1+cu117
 tqdm==4.65.0
 transformers==4.30.2
 typing_extensions==4.7.1

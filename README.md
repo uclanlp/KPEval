@@ -1,3 +1,46 @@
+# KPEval: SemR-p 🛠️ 
+## (Fork for Semantic R-precision Implementation)
+
+**Note:** This repository is a fork of the official [KPEval toolkit](https://github.com/uclanlp/KPEval) by Wu, Yin, and Chang. The primary purpose of this fork is the development and testing of a new keyphrase evaluation metric, Semantic R-Precision (SemR-p).
+
+**Semantic R-precision**
+
+Semantic R-Precision (SemR-p) is a novel metric designed to jointly evaluate semantic relevance and ranking quality of reference agreement in keyphrase prediction. It builds upon the R-Precision framework by incorporating embedding-based semantic similarity for non-exact matches. This work aims to provide a more holistic assessment of keyphrase quality. 
+SemR-p is output automatically with the other semantic metrics when using `semantic_matching` as metric_id in the evaluation function.
+
+The implementation of SemR-p in this fork is intended for contribution back to the main KPEval toolkit. If you use SemR-p, please cite our [paper](https://www.researchgate.net/publication/391552955_Meaning_in_Order_Order_in_Meaning_Semantic_R-precision_for_Keyphrase_Evaluation}):
+
+```
+@misc{VenturiniKinkel2024SemRp_preprint,
+  author    = {Venturini, Shamira and Kinkel, Steffen},
+  title     = {Meaning in Order, Order in Meaning: {S}emantic {R}-precision for Keyphrase Evaluation},
+  year      = {2025},
+  howpublished = {ResearchGate preprint},
+  note      = {Preprint available online},
+  url       = {https://www.researchgate.net/publication/391552955_Meaning_in_Order_Order_in_Meaning_Semantic_R-precision_for_Keyphrase_Evaluation},
+  doi       = {10.13140/RG.2.2.31841.83044}
+}
+```
+
+### Modifications in this Fork:
+
+1.  **Added SemR-p Metric Implementation:**
+
+SemR-p was integrated into the existing `SemanticMatchingMetric` class alongside SemP, SemR, and SemF1 (within `metrics/semantic_matching_metric.py`): This integration leverages the same core phrase-level semantic similarity calculation (using Sentence Transformer `uclanlp/keyphrase-mpnet-v1`) already implemented for SemP/R/F1. This allows users interested in phrase-level semantic reference agreement to obtain both rank-agnostic scores (SemP/R/F1) and a rank-aware score (SemR-p) simultaneously by running the `semantic_matching` metric group, without the overhead of loading the embedding model twice or running separate evaluation scripts. SemR-p complements SemP/R/F1 by incorporating crucial ranking information (via the R-Precision framework) into the phrase-level semantic evaluation, offering a more complete picture of system-level semantic performance.
+
+2.  **Added macOS/CPU PyTorch Installation Instructions:**
+
+- Install torch. For macOS or CPU-only users (no CUDA):
+
+`pip install torch==1.13.1 torchvision torchaudio`
+
+3.  **Added Data Retrieval Utility Script:**
+    *   Included a new script `doc_retriever.py` that provides a function (`get_qualitative_data`) to easily load the source text, target keyphrases, and predicted keyphrases for a specific document index from the model_outputs folder.
+    *   This utility facilitates qualitative analysis and inspection of specific examples.
+
+
+-----------------------------
+
 # KPEval 🛠️
 
 KPEval is a toolkit for evaluating your keyphrase systems. 🎯 
